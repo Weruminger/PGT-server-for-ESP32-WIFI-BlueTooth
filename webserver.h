@@ -5,7 +5,7 @@
 #include <WebServer.h>
 #include "mount.h"
 #include <FS.h>
-
+#define N_STYLE  " style='text-align: right;height:20px; width:60px' value ='"
 extern WebServer serverweb;
 extern mount_t *telescope;
 extern String ssi;

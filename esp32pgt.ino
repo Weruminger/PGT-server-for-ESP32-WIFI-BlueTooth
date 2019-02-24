@@ -44,12 +44,12 @@ Ticker speed_control_tckr, counters_poll_tkr;
 extern long command( char *str );
 time_t now;
 #ifdef OLED_DISPLAY
-#incl ude "SSD1306.h"
+#include "SSD1306.h"
 //#include "SH1106.h"
 
 #include "pad.h"
 //SSD1306
-SSD1306 display(0x3c, D5, D6);
+SSD1306 display(0x3c, 21, 22);
 
 void oledDisplay()
 {
@@ -176,7 +176,7 @@ void setup()
   nunchuck_init(2, 0);
 
 #endif
-
+  SerialBT.begin("PGT-BLUE");
   WiFi.mode(WIFI_AP_STA);
   WiFi.softAP("PGT_ESP", "boquerones");
   SPIFFS.begin();
@@ -185,6 +185,7 @@ void setup()
   {
     ssi = f.readStringUntil('\n');
     pwd = f.readStringUntil('\n');
+   
     f.close();
     char  ss [ssi.length() + 1];
     char  pw [pwd.length() + 1];
@@ -197,7 +198,7 @@ void setup()
   }
   else  WiFi.begin(ssid, password);
 #ifdef FIXED_IP
-  IPAddress ip(192, 168, 0, 15);
+  IPAddress ip(192, 168, 0, 14);
   IPAddress gateway(192, 168, 0, 1);
   IPAddress subnet(255, 255, 255, 0);
   // IPAddress DNS(8, 8, 8, 8);
@@ -210,6 +211,8 @@ void setup()
   if (i == 21)
   {
     //     while (1) delay(500);
+    Serial.print(ssi);
+    Serial.print(pwd);
   }
 #ifdef OLED_DISPLAY
   oled_waitscr();
@@ -255,7 +258,6 @@ void loop()
 #endif
 
 }
-
 
 
 
